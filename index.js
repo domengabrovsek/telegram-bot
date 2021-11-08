@@ -8,32 +8,34 @@ const bot = new TelegramBot(process.env.TOKEN, { polling: true });
 
 console.log('Starting bot.')
 
+// this interval id is used so we can clear it later with clearInterval to stop continuous messages
 let intervalId;
 
+// run this on every receives message
 bot.on('message', (msg) => {
-  
+
   const from = msg.from.first_name;
 
-  if(from === 'Daria') {
+  // a special message for my wife
+  if (from === 'Daria') {
     bot.sendMessage(msg.chat.id, 'Oh hi Dashkin! You are the best! <3');
   } else {
     bot.sendMessage(msg.chat.id, `Thank you for your message ${msg.from.first_name}`);
   }
-
 })
 
+// run this when /start is sent as message
 bot.onText(/start/, (msg, match) => {
-  const fromId = msg.from.id;
   const chatId = msg.chat.id;
 
-  console.log('Setting up interval to remind Milan to commit more often');
-
   bot.sendMessage(chatId, `I will now start to spam Milan.`);
+
+  // send a message every 5000ms
   intervalId = setInterval(() => bot.sendMessage(chatId, `Milan are you ready for some annoying bot stuff? Muahahaha`), 5000);
 });
 
+// run this when /stop is sent as message
 bot.onText(/stop/, (msg, match) => {
-  const fromId = msg.from.id;
   const chatId = msg.chat.id;
 
   bot.sendMessage(chatId, 'I guess Milan is tired of this shit already, I will stop it for now');
