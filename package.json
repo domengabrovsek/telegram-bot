@@ -19,6 +19,7 @@
   "homepage": "https://github.com/domengabrovsek/telegram-bot#readme",
   "dependencies": {
     "dotenv": "^10.0.0",
-    "node-telegram-bot-api": "^0.54.0"
+    "node-telegram-bot-api": "^0.54.0",
+    "serverless": "^2.70.0"
   }
 }
