@@ -1,0 +1,32 @@
+service: telegram-bot
+
+# https://www.serverless.com/framework/docs/deprecations/#NEW_VARIABLES_RESOLVER
+variablesResolutionMode: 20210326
+
+# throw error before trying to deploy if something is wrong in config
+configValidationMode: error
+
+# create an optimized package for our functions
+package:
+  individually: true
+
+provider:
+  # https://www.serverless.com/framework/docs/deprecations/#LAMBDA_HASHING_VERSION_V2
+  lambdaHashingVersion: 20201221
+
+  name: aws
+  runtime: nodejs14.x
+  memorySize: 128
+  region: eu-west-1
+  environment:
+    TELEGRAM_BOT_API_KEY: ${ssm:/dg-telegram-bot-api-key}
+
+functions:
+
+  bot:
+    handler: src/lambda/bot.handler
+    events:
+      - http:
+          method: post
+          path: bot
+          cors: true
