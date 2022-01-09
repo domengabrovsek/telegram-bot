@@ -4,7 +4,7 @@
   "description": "Telegram bot",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "serverless deploy --aws-profile admin --verbose"
   },
   "repository": {
     "type": "git",
@@ -18,8 +18,9 @@
   },
   "homepage": "https://github.com/domengabrovsek/telegram-bot#readme",
   "dependencies": {
-    "dotenv": "^10.0.0",
-    "node-telegram-bot-api": "^0.54.0",
+    "axios": "^0.24.0"
+  },
+  "devDependencies": {
     "serverless": "^2.70.0"
   }
 }
