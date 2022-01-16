@@ -20,6 +20,9 @@ provider:
   region: eu-west-1
   environment:
     TELEGRAM_BOT_API_KEY: ${ssm:/dg-telegram-bot-api-key}
+    TWITTER_API_KEY: ${ssm:/twitter-api-key}
+    TWITTER_API_KEY_SECRET: ${ssm:/twitter-api-key-secret}
+    TWITTER_BEARER_TOKEN: ${ssm:/twitter-bearer-token}
 
 functions:
 
