@@ -4,7 +4,7 @@
   "description": "Telegram bot",
   "main": "index.js",
   "scripts": {
-    "deploy": "serverless deploy --aws-profile admin --verbose"
+    "deploy": "serverless deploy --aws-profile admin-personal --verbose"
   },
   "repository": {
     "type": "git",
