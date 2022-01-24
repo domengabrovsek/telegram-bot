@@ -1,44 +1,33 @@
-const axios = require('axios');
+const { sendText } = require('../utils/telegram');
+const { getAvailableTickers } = require('../utils/kraken');
 
-const token = process.env.TELEGRAM_BOT_API_KEY;
+module.exports.handler = async (event) => {
 
-async function sendToUser(chat_id, text) {
-  return await axios.get(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${text}`);
-}
+  try {
 
-module.exports.handler = async event => {
-  const body = JSON.parse(event.body);
-  const { chat, text } = body.message;
+    const body = JSON.parse(event.body);
+    const { chat, text } = body?.message || {};
 
-  if (text) {
-    let message = '';
-    try {
+    // TODO: figure out how to rename commands to make some sense
+    if (text.includes('/command1')) {
 
-      if (text === 'twitter') {
+      const ticker = text.split(' ')?.[1];
+      const tickers = getAvailableTickers(ticker)
+      const message = 'Here are all pairs available on Kraken: \n' + tickers;
 
-        const url = 'https://api.twitter.com/2/tweets/20';
-        const options = {
-          headers: {
-            Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}`
-          }
-        }
-
-        const result = await axios.get(url, options);
-
-        message = JSON.stringify(result.data);
-      }
-      else {
-        message = `Input: ${text}`;
-      }
-
-    } catch (error) {
-      message = `Input: ${text}, \nError: ${error.message}`;
+      await sendText(chat.id, message);
+    } 
+    
+    // default message
+    else {
+      const message = 'I am just repeating after you.' + '\n' + text;
+      await sendText(chat.id, message);
     }
 
-    await sendToUser(chat.id, message);
-  } else {
-    await sendToUser(chat.id, 'Text message is expected.');
-  }
+    return { statusCode: 200 };
 
-  return { statusCode: 200 };
+  } catch (error) {
+    console.error(error);
+    return { statusCode: 200 };
+  }
 };
