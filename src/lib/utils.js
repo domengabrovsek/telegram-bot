@@ -5,10 +5,10 @@ const formatArrayMessage = (array) => {
   let message = '';
 
   array.forEach(item => {
-    message += ` ${item}\n`
+    message += ` ${item}\n`;
   });
 
   return message;
-}
+};
 
 module.exports = { getRandomNumber, formatArrayMessage };
