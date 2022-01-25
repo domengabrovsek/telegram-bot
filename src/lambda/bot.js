@@ -1,5 +1,4 @@
-const { sendText, sendDefaultMessage } = require('../lib/telegram');
-const { getAvailableTickers } = require('../lib/kraken');
+const { sendDefaultMessage, sendTickersMessage } = require('../lib/telegram');
 
 module.exports.handler = async (event) => {
 
@@ -8,25 +7,25 @@ module.exports.handler = async (event) => {
     const body = JSON.parse(event.body);
     const { chat, text } = body?.message || {};
 
-    // TODO: figure out how to rename commands to make some sense
-    if (text.includes('/command1')) {
+    // split command from arguments
+    const [command, arg] = text.split(' ');
 
-      const ticker = text.split(' ')?.[1];
-      const tickers = getAvailableTickers(ticker)
-      const message = 'Here are all pairs available on Kraken: \n' + tickers;
+    console.log({ command, arg, text });
 
-      await sendText(chat.id, message);
-    } 
-    
-    // default message
-    else {
-      await sendDefaultMessage(chat.id);
+    // perform action based on what user input
+    switch (command) {
+      case '/tokens': {
+        await sendTickersMessage(chat.id, arg);
+        break;
+      }
+      default: {
+        await sendDefaultMessage(chat.id);
+      }
     }
 
     return { statusCode: 200 };
 
   } catch (error) {
-    console.error(error);
     return { statusCode: 200 };
   }
 };
