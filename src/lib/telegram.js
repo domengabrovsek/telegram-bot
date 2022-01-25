@@ -3,7 +3,7 @@ const { getAvailableTickers } = require('./kraken');
 
 const { getRandomNumber, formatArrayMessage } = require('./utils');
 
-const sendMessage = (chatId, text) => {
+const sendMessage = async (chatId, text) => {
 
   // api token is saved in AWS SSM for security reasons
   const token = process.env.TELEGRAM_BOT_API_KEY;
@@ -12,7 +12,7 @@ const sendMessage = (chatId, text) => {
   const method = 'sendMessage';
   const url = `${baseUrl}${token}/${method}?chat_id=${chatId}&text=${text}`;
 
-  axios.get(url);
+  await axios.get(url);
 };
 
 const sendDefaultMessage = async (chatId) => {
