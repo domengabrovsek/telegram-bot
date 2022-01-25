@@ -1,5 +1,5 @@
-const { sendText } = require('../utils/telegram');
-const { getAvailableTickers } = require('../utils/kraken');
+const { sendText, sendDefaultMessage } = require('../lib/telegram');
+const { getAvailableTickers } = require('../lib/kraken');
 
 module.exports.handler = async (event) => {
 
@@ -20,8 +20,7 @@ module.exports.handler = async (event) => {
     
     // default message
     else {
-      const message = 'I am just repeating after you.' + '\n' + text;
-      await sendText(chat.id, message);
+      await sendDefaultMessage(chat.id);
     }
 
     return { statusCode: 200 };
