@@ -12,8 +12,8 @@ const sendMessage = async (chatId, text) => {
   const method = 'sendMessage';
   const url = `${baseUrl}${token}/${method}?chat_id=${chatId}&text=${text}`;
 
-  return await axios.get(url);
-}
+  await axios.get(url);
+};
 
 const sendDefaultMessage = async (chatId) => {
 
@@ -34,7 +34,7 @@ const sendDefaultMessage = async (chatId) => {
   const message = messages[getRandomNumber(0, messages.length - 1)];
 
   await sendMessage(chatId, message);
-}
+};
 
 const sendTickersMessage = async (chatId, arg) => {
 
@@ -42,11 +42,11 @@ const sendTickersMessage = async (chatId, arg) => {
   const message = `Here are the requested tokens: \n${formatArrayMessage(tickers)}`;
 
   await sendMessage(chatId, message);
-}
+};
 
 const sendErrorMessage = async (chatId, error) => {
   await sendMessage(chatId, error);
-}
+};
 
 module.exports = {
   sendMessage,
