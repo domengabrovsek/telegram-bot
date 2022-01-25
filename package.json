@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "deploy": "serverless deploy --aws-profile admin-personal --verbose",
-    "lint": "eslint . --max-warnings 0 --fix"
+    "lint": "eslint . --max-warnings 0 --fix",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
+    "husky": "^7.0.4",
     "serverless": "^2.72.2"
   }
 }
