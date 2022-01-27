@@ -38,7 +38,7 @@ const sendDefaultMessage = async (chatId) => {
 
 const sendTickersMessage = async (chatId, arg) => {
 
-  const tickers = await getAvailableTickers(arg);
+  const tickers = await getAvailableTickers(arg.toUpperCase());
   let message = 'Here are the requested tokens: \n';
 
   tickers.forEach(ticker => {
