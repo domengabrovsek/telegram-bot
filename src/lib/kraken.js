@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { tickers } = require('./tickers');
+const tickers = require('./tickers');
 
 // https://docs.kraken.com/rest/#operation/getTickerInformation
 const getTickerInfo = async (ticker) => {
@@ -27,10 +27,6 @@ const mapTickerInfo = (tickerResult) => {
 };
 
 const getAvailableTickers = async (text) => {
-
-  // currencies we're interested in at the moment
-  // const currencies = ['BTC', 'XBT', 'ETH', 'EUR', 'USD'];
-
   // list of tickers without any info
   const tickerList = text
     ? tickers.filter(ticker => ticker.includes(text))
