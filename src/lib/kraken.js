@@ -27,21 +27,29 @@ const mapTickerInfo = (tickerResult) => {
 };
 
 const getAvailableTickers = async (text) => {
+
+  // currencies we are interested in right now
+  const currencies = ['BTC', 'XBT', 'USD', 'EUR'];
+
   // list of tickers without any info
   const tickerList = text
     ? tickers.filter(ticker => ticker.includes(text))
     : tickers;
 
+  // filter tickers with only provided currencies
+  const filteredTickers = tickerList
+    .filter(ticker => currencies
+      .some(currency => ticker
+        .includes(currency)));
+
   // map list of tickers to list of promises
-  const promises = tickerList.map(item => getTickerInfo(item));
+  const promises = filteredTickers.map(item => getTickerInfo(item));
 
   // get info from kraken (in parallel)
   const results = await Promise.all(promises);
 
   // map results to some simplified format
   const tickersInfo = results.map(item => mapTickerInfo(item));
-
-  console.log(tickersInfo);
 
   return tickersInfo;
 };
