@@ -1,4 +1,4 @@
-const tickers = [
+module.exports = [
   '1INCHEUR',
   '1INCHUSD',
   'AAVEAUD',
@@ -413,7 +413,3 @@ const tickers = [
   'ZUSDZCAD',
   'ZUSDZJPY'
 ];
-
-module.exports = {
-  tickers
-};
