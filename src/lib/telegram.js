@@ -44,6 +44,7 @@ const sendTweetsMessage = async (chatId, arg) => {
       url: `https://twitter.com/${arg}/status/${tweet.id}`
     }));
 
+  // TODO: check why long messages are not displayed properly
   console.log('DEBUG', JSON.stringify(tweets));
 
   const messages = tweets.map(tweet => sendMessage(chatId, JSON.stringify(tweet)));
