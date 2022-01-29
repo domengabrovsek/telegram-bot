@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { getAvailableTickers } = require('./kraken');
+const { getTweetsByUsername } = require('./twitter');
 
 const { getRandomNumber } = require('./utils');
 
@@ -36,6 +37,20 @@ const sendDefaultMessage = async (chatId) => {
   await sendMessage(chatId, message);
 };
 
+const sendTweetsMessage = async (chatId, arg) => {
+  const tweets = (await getTweetsByUsername(arg))
+    .map(tweet => ({
+      ...tweet,
+      url: `https://twitter.com/${arg}/status/${tweet.id}`
+    }));
+
+  // TODO: check why long messages are not displayed properly
+  console.log('DEBUG', JSON.stringify(tweets));
+
+  const messages = tweets.map(tweet => sendMessage(chatId, JSON.stringify(tweet)));
+  await Promise.all(messages);
+};
+
 const sendTickersMessage = async (chatId, arg) => {
 
   const tickers = await getAvailableTickers(arg.toUpperCase());
@@ -63,5 +78,6 @@ module.exports = {
   sendMessage,
   sendDefaultMessage,
   sendErrorMessage,
-  sendTickersMessage
+  sendTickersMessage,
+  sendTweetsMessage
 };

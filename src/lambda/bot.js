@@ -1,4 +1,8 @@
-const { sendDefaultMessage, sendTickersMessage } = require('../lib/telegram');
+const {
+  sendDefaultMessage,
+  sendTickersMessage,
+  sendTweetsMessage
+} = require('../lib/telegram');
 
 module.exports.handler = async (event) => {
 
@@ -16,6 +20,10 @@ module.exports.handler = async (event) => {
     switch (command) {
       case '/tokens': {
         await sendTickersMessage(chat.id, arg);
+        break;
+      }
+      case '/twitter': {
+        await sendTweetsMessage(chat.id, arg);
         break;
       }
       default: {
