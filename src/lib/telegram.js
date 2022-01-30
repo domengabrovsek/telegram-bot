@@ -40,7 +40,6 @@ const sendDefaultMessage = async (chatId) => {
 const sendTweetsMessage = async (chatId, arg) => {
   const tweets = (await getTweetsByUsername(arg))
     .map(tweet => ({
-      ...tweet,
       url: `https://twitter.com/${arg}/status/${tweet.id}`
     }));
 
