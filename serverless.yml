@@ -23,6 +23,7 @@ provider:
     TWITTER_API_KEY: ${ssm:/twitter-api-key}
     TWITTER_API_KEY_SECRET: ${ssm:/twitter-api-key-secret}
     TWITTER_BEARER_TOKEN: ${ssm:/twitter-bearer-token}
+    FINNHUB_TOKEN: ${ssm:/finnhub-token}
 functions:
 
   bot:
