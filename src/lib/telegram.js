@@ -28,7 +28,10 @@ const sendDefaultMessage = async (chatId) => {
     'Bananas',
     'блин!',
     'Apparently I am still working',
-    'Hi, I am bot'
+    'Hi, I am bot',
+    'Kad je Tito bio živ ...',
+    'Kad sam ja bio tvojih godina ...',
+    'телеграм бот ***** тебя в рот!'
   ];
 
   // select a random message from the list
