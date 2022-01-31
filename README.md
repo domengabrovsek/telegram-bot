@@ -6,6 +6,21 @@ Telegram bot
 
 Playing around with telegram bot and nodejs
 
+## Commands
+
+```js
+
+// get recent tweets for specified username
+/twitter [username]
+
+// get current crypto token prices for specified ticker
+/tokens [ticker]
+
+// get current stock prices for specified symbol
+/stocks [symbol]
+
+```
+
 ### Notes
 
 Setup a webhook
