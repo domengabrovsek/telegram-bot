@@ -1,7 +1,7 @@
 const axios = require('axios');
 const { getAvailableTickers } = require('./kraken');
 const { getTweetsByUsername } = require('./twitter');
-
+const { getSymbolInfo } = require('./finnhub');
 const { getRandomNumber } = require('./utils');
 
 const sendMessage = async (chatId, text) => {
@@ -35,7 +35,8 @@ const sendDefaultMessage = async (chatId) => {
   ];
 
   // select a random message from the list
-  const message = messages[getRandomNumber(0, messages.length - 1)];
+  const randomIndex = getRandomNumber(0, messages.length - 1);
+  const message = messages[randomIndex];
 
   await sendMessage(chatId, message);
 };
@@ -72,6 +73,12 @@ const sendTickersMessage = async (chatId, arg) => {
   await sendMessage(chatId, message);
 };
 
+const sendStockMessage = async (chatId, arg) => {
+  const stockInfo = await getSymbolInfo(arg);
+  const message = JSON.stringify(stockInfo);
+  await sendMessage(chatId, message);
+};
+
 const sendErrorMessage = async (chatId, error) => {
   await sendMessage(chatId, error);
 };
@@ -81,5 +88,6 @@ module.exports = {
   sendDefaultMessage,
   sendErrorMessage,
   sendTickersMessage,
-  sendTweetsMessage
+  sendTweetsMessage,
+  sendStockMessage
 };
