@@ -74,8 +74,15 @@ const sendTickersMessage = async (chatId, arg) => {
 };
 
 const sendStockMessage = async (chatId, arg) => {
-  const stockInfo = await getSymbolInfo(arg);
-  const message = JSON.stringify(stockInfo);
+  const stockInfo = await getSymbolInfo(arg.toUpperCase());
+
+  let message = 'Here is the stock info:\n\n';
+  message += `Name: ${stockInfo.name}\n`;
+  message += `Current price: ${stockInfo.current}$\n`;
+  message += `Today's opening price: ${stockInfo.open}$\n`;
+  message += `Today's range: ${stockInfo.low}-${stockInfo.high}$\n`;
+  message += `Change from yesterday: ${stockInfo.change}$ (${stockInfo.percentChange}%)\n`;
+
   await sendMessage(chatId, message);
 };
 
