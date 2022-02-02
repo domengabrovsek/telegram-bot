@@ -4,12 +4,12 @@ const { getTweetsByUsername } = require('./twitter');
 const { getSymbolInfo } = require('./finnhub');
 const { getRandomNumber } = require('./utils');
 
+// api token is saved in AWS SSM for security reasons
+const token = process.env.TELEGRAM_BOT_API_KEY;
+const baseUrl = 'https://api.telegram.org/bot';
+
 const sendMessage = async (chatId, text) => {
 
-  // api token is saved in AWS SSM for security reasons
-  const token = process.env.TELEGRAM_BOT_API_KEY;
-
-  const baseUrl = 'https://api.telegram.org/bot';
   const method = 'sendMessage';
   const url = `${baseUrl}${token}/${method}?chat_id=${chatId}&text=${text}`;
 
@@ -90,11 +90,31 @@ const sendErrorMessage = async (chatId, error) => {
   await sendMessage(chatId, error);
 };
 
+const getListOfCommands = async () => {
+  const method = 'getMyCommands';
+  const url = `${baseUrl}${token}/${method}`;
+  const result = await axios.get(url);
+  return result.data.result;
+};
+
+const sendCommandsMessage = async (chatId) => {
+  const commands = await getListOfCommands();
+
+  let message = 'Here is a list of all current commands:\n';
+
+  commands.forEach(item => {
+    message += `/${item.command} - ${item.description}\n`;
+  });
+
+  await sendMessage(chatId, message);
+};
+
 module.exports = {
   sendMessage,
   sendDefaultMessage,
   sendErrorMessage,
   sendTickersMessage,
   sendTweetsMessage,
-  sendStockMessage
+  sendStockMessage,
+  sendCommandsMessage
 };

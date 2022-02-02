@@ -2,7 +2,8 @@ const {
   sendDefaultMessage,
   sendTickersMessage,
   sendTweetsMessage,
-  sendStockMessage
+  sendStockMessage,
+  sendCommandsMessage
 } = require('../lib/telegram');
 
 module.exports.handler = async (event) => {
@@ -19,6 +20,11 @@ module.exports.handler = async (event) => {
 
     // perform action based on what user input
     switch (command) {
+
+      case '/commands': {
+        await sendCommandsMessage(chat.id);
+        break;
+      }
       case '/tokens': {
         await sendTickersMessage(chat.id, arg);
         break;
