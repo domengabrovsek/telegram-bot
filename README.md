@@ -10,6 +10,9 @@ Playing around with telegram bot and nodejs
 
 ```js
 
+// get a list of all currently supported commands
+/commands
+
 // get recent tweets for specified username
 /twitter [username]
 
