@@ -5,7 +5,7 @@ const {
 } = require('../lib/telegram');
 
 const { handleTwitterMessage } = require('../services/TwitterService');
-const { handleKrakenMessage} = require('../services/KrakenService');
+const { handleKrakenMessage } = require('../services/KrakenService');
 
 module.exports.handler = async (event) => {
 
