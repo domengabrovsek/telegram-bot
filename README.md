@@ -4,7 +4,7 @@ Telegram bot
 
 ## Description
 
-Playing around with telegram bot and nodejs
+Playing around with telegram bot and nodejs and integrating different services into telegram bot.
 
 ## Commands
 
