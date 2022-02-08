@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/domengabrovsek/telegram-bot#readme",
   "dependencies": {
+    "aws-sdk": "^2.1070.0",
     "axios": "^0.24.0"
   },
   "devDependencies": {

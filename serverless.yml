@@ -24,8 +24,9 @@ provider:
     TWITTER_API_KEY_SECRET: ${ssm:/twitter-api-key-secret}
     TWITTER_BEARER_TOKEN: ${ssm:/twitter-bearer-token}
     FINNHUB_TOKEN: ${ssm:/finnhub-token}
-functions:
 
+# lambda functions
+functions:
   bot:
     handler: src/lambda/bot.handler
     events:
@@ -33,3 +34,11 @@ functions:
           method: post
           path: bot
           cors: true
+          
+# other resources
+resources:
+  Resources:
+    TelegramCommandsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: telegram-commands-bucket
