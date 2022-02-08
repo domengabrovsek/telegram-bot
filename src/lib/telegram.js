@@ -1,5 +1,6 @@
 const { get } = require('../services/HttpService');
 const { getRandomNumber } = require('./utils');
+const { getCommands } = require('../data/commands');
 
 // api token is saved in AWS SSM for security reasons
 const token = process.env.TELEGRAM_BOT_API_KEY;
@@ -38,9 +39,21 @@ const sendDefaultMessage = async (chatId) => {
   await sendMessage(chatId, message);
 };
 
+const setListOfCommands = async () => {
+  const { serializedCommands } = getCommands();
+  const method = 'setMyCommands';
+  const url = `${baseUrl}${token}/${method}?commands=${serializedCommands}`;
+  const result = await get(url);
+  return result.result;
+};
+
 const getListOfCommands = async () => {
+
+  // first update list of commands
+  await setListOfCommands();
+
   const method = 'getMyCommands';
-  const url = `${baseUrl}${token}/${method}`;
+  const url = `${baseUrl}${token}/${method}?`;
   const result = await get(url);
   return result.result;
 };
