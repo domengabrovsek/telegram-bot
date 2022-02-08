@@ -1,5 +1,4 @@
 const axios = require('axios');
-const { getSymbolInfo } = require('./finnhub');
 const { getRandomNumber } = require('./utils');
 
 // api token is saved in AWS SSM for security reasons
@@ -39,23 +38,6 @@ const sendDefaultMessage = async (chatId) => {
   await sendMessage(chatId, message);
 };
 
-const sendStockMessage = async (chatId, arg) => {
-  const stockInfo = await getSymbolInfo(arg.toUpperCase());
-
-  let message = 'Here is the stock info:\n\n';
-  message += `Name: ${stockInfo.name}\n`;
-  message += `Current price: ${stockInfo.current}$\n`;
-  message += `Today's opening price: ${stockInfo.open}$\n`;
-  message += `Today's range: ${stockInfo.low}-${stockInfo.high}$\n`;
-  message += `Change from yesterday: ${stockInfo.change}$ (${stockInfo.percentChange}%)\n`;
-
-  await sendMessage(chatId, message);
-};
-
-const sendErrorMessage = async (chatId, error) => {
-  await sendMessage(chatId, error);
-};
-
 const getListOfCommands = async () => {
   const method = 'getMyCommands';
   const url = `${baseUrl}${token}/${method}`;
@@ -78,7 +60,5 @@ const sendCommandsMessage = async (chatId) => {
 module.exports = {
   sendMessage,
   sendDefaultMessage,
-  sendErrorMessage,
-  sendStockMessage,
   sendCommandsMessage
 };
