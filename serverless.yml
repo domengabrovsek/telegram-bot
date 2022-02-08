@@ -19,11 +19,22 @@ provider:
   memorySize: 128
   region: eu-central-1
   environment:
+
+    # telegram credentials
     TELEGRAM_BOT_API_KEY: ${ssm:/dg-telegram-bot-api-key}
+
+    # twitter credentials
     TWITTER_API_KEY: ${ssm:/twitter-api-key}
     TWITTER_API_KEY_SECRET: ${ssm:/twitter-api-key-secret}
     TWITTER_BEARER_TOKEN: ${ssm:/twitter-bearer-token}
+
+    # finnhub credentials (stocks)
     FINNHUB_TOKEN: ${ssm:/finnhub-token}
+
+    # gmail credentials
+    GMAIL_CLIENT_ID: ${ssm:/gmail-client-id}
+    GMAIL_CLIENT_SECRET: ${ssm:/gmail-client-secret}
+    GMAIL_REFRESH_TOKEN: ${ssm:/gmail-refresh-token}
 functions:
 
   bot:
