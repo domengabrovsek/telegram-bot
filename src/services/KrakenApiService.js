@@ -1,4 +1,4 @@
-const axios = require('axios');
+const { get } = require('./HttpService');
 
 const baseUrl = 'https://api.kraken.com/0';
 
@@ -12,7 +12,7 @@ const baseUrl = 'https://api.kraken.com/0';
 
 const getTickerInfo = async (ticker) => {
   const url = `${baseUrl}/public/Ticker?pair=${ticker}`;
-  const result = await axios.get(url);
+  const result = await get(url);
   return result;
 };
 

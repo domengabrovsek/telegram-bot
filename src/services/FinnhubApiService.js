@@ -1,4 +1,4 @@
-const axios = require('axios');
+const { get } = require('./HttpService');
 
 const baseUrl = 'https://finnhub.io/api/v1';
 const token = process.env.FINNHUB_TOKEN;
@@ -10,16 +10,16 @@ const options = {
 
 const search = async (symbol) => {
   const url = `${baseUrl}/search?q=${symbol}`;
-  const result = await axios.get(url, options);
+  const result = await get(url, options);
 
-  return result.data.result;
+  return result.result;
 };
 
 const quote = async (symbol) => {
   const url = `${baseUrl}//quote?symbol=${symbol}`;
-  const result = await axios.get(url, options);
+  const result = await get(url, options);
 
-  return result.data;
+  return result;
 };
 
 module.exports = {

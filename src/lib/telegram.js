@@ -1,4 +1,4 @@
-const axios = require('axios');
+const { get } = require('../services/HttpService');
 const { getRandomNumber } = require('./utils');
 
 // api token is saved in AWS SSM for security reasons
@@ -10,7 +10,7 @@ const sendMessage = async (chatId, text) => {
   const method = 'sendMessage';
   const url = `${baseUrl}${token}/${method}?chat_id=${chatId}&text=${text}`;
 
-  await axios.get(url);
+  await get(url);
 };
 
 const sendDefaultMessage = async (chatId) => {
@@ -41,8 +41,8 @@ const sendDefaultMessage = async (chatId) => {
 const getListOfCommands = async () => {
   const method = 'getMyCommands';
   const url = `${baseUrl}${token}/${method}`;
-  const result = await axios.get(url);
-  return result.data.result;
+  const result = await get(url);
+  return result.result;
 };
 
 const sendCommandsMessage = async (chatId) => {

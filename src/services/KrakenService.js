@@ -5,8 +5,8 @@ const { sendMessage } = require('../lib/telegram');
 const mapTickerInfo = (tickerResult) => {
 
   // there is always just one key (weird kraken structure)
-  const key = Object.keys(tickerResult.data.result)[0];
-  const values = tickerResult.data.result[key];
+  const key = Object.keys(tickerResult.result)[0];
+  const values = tickerResult.result[key];
 
   const mappedInfo = {
     symbol: key,
