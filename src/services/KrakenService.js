@@ -1,18 +1,12 @@
-const axios = require('axios');
-const tickers = require('./tickers');
-
-// https://docs.kraken.com/rest/#operation/getTickerInformation
-const getTickerInfo = async (ticker) => {
-  const url = `https://api.kraken.com/0/public/Ticker?pair=${ticker}`;
-  const result = await axios.get(url);
-  return result;
-};
+const tickers = require('../data/tickers');
+const { getTickerInfo } = require('./KrakenApiService');
+const { sendMessage } = require('../lib/telegram');
 
 const mapTickerInfo = (tickerResult) => {
 
   // there is always just one key (weird kraken structure)
-  const key = Object.keys(tickerResult.data.result)[0];
-  const values = tickerResult.data.result[key];
+  const key = Object.keys(tickerResult.result)[0];
+  const values = tickerResult.result[key];
 
   const mappedInfo = {
     symbol: key,
@@ -54,7 +48,25 @@ const getAvailableTickers = async (text) => {
   return tickersInfo;
 };
 
+const handleKrakenMessage = async (chatId, arg) => {
+
+  const tickers = await getAvailableTickers(arg.toUpperCase());
+  let message = 'Here are the requested tokens: \n';
+
+  tickers.forEach(ticker => {
+    message += '************************\n';
+    message += `* Ticker: ${ticker.symbol}\n`;
+    message += `* Ask price: ${ticker.askPrice}\n`;
+    message += `* Bid price: ${ticker.bidPrice}\n`;
+    message += `* Volume: ${ticker.volume}\n`;
+    message += `* Low: ${ticker.low}\n`;
+    message += `* High: ${ticker.high}\n`;
+    message += '************************\n';
+  });
+
+  await sendMessage(chatId, message);
+};
+
 module.exports = {
-  getAvailableTickers,
-  getTickerInfo
+  handleKrakenMessage
 };

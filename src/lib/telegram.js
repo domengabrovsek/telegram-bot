@@ -1,19 +1,16 @@
-const axios = require('axios');
-const { getAvailableTickers } = require('./kraken');
-const { getTweetsByUsername } = require('./twitter');
-const { getSymbolInfo } = require('./finnhub');
+const { get } = require('../services/HttpService');
 const { getRandomNumber } = require('./utils');
+
+// api token is saved in AWS SSM for security reasons
+const token = process.env.TELEGRAM_BOT_API_KEY;
+const baseUrl = 'https://api.telegram.org/bot';
 
 const sendMessage = async (chatId, text) => {
 
-  // api token is saved in AWS SSM for security reasons
-  const token = process.env.TELEGRAM_BOT_API_KEY;
-
-  const baseUrl = 'https://api.telegram.org/bot';
   const method = 'sendMessage';
   const url = `${baseUrl}${token}/${method}?chat_id=${chatId}&text=${text}`;
 
-  await axios.get(url);
+  await get(url);
 };
 
 const sendDefaultMessage = async (chatId) => {
@@ -41,60 +38,27 @@ const sendDefaultMessage = async (chatId) => {
   await sendMessage(chatId, message);
 };
 
-const sendTweetsMessage = async (chatId, arg) => {
-  const tweets = (await getTweetsByUsername(arg))
-    .map(tweet => ({
-      url: `https://twitter.com/${arg}/status/${tweet.id}`
-    }));
-
-  // TODO: check why long messages are not displayed properly
-  console.log('DEBUG', JSON.stringify(tweets));
-
-  const messages = tweets.map(tweet => sendMessage(chatId, JSON.stringify(tweet)));
-  await Promise.all(messages);
+const getListOfCommands = async () => {
+  const method = 'getMyCommands';
+  const url = `${baseUrl}${token}/${method}`;
+  const result = await get(url);
+  return result.result;
 };
 
-const sendTickersMessage = async (chatId, arg) => {
+const sendCommandsMessage = async (chatId) => {
+  const commands = await getListOfCommands();
 
-  const tickers = await getAvailableTickers(arg.toUpperCase());
-  let message = 'Here are the requested tokens: \n';
+  let message = 'Here is a list of all current commands:\n';
 
-  tickers.forEach(ticker => {
-    message += '************************\n';
-    message += `* Ticker: ${ticker.symbol}\n`;
-    message += `* Ask price: ${ticker.askPrice}\n`;
-    message += `* Bid price: ${ticker.bidPrice}\n`;
-    message += `* Volume: ${ticker.volume}\n`;
-    message += `* Low: ${ticker.low}\n`;
-    message += `* High: ${ticker.high}\n`;
-    message += '************************\n';
+  commands.forEach(item => {
+    message += `/${item.command} - ${item.description}\n`;
   });
 
   await sendMessage(chatId, message);
 };
 
-const sendStockMessage = async (chatId, arg) => {
-  const stockInfo = await getSymbolInfo(arg.toUpperCase());
-
-  let message = 'Here is the stock info:\n\n';
-  message += `Name: ${stockInfo.name}\n`;
-  message += `Current price: ${stockInfo.current}$\n`;
-  message += `Today's opening price: ${stockInfo.open}$\n`;
-  message += `Today's range: ${stockInfo.low}-${stockInfo.high}$\n`;
-  message += `Change from yesterday: ${stockInfo.change}$ (${stockInfo.percentChange}%)\n`;
-
-  await sendMessage(chatId, message);
-};
-
-const sendErrorMessage = async (chatId, error) => {
-  await sendMessage(chatId, error);
-};
-
 module.exports = {
   sendMessage,
   sendDefaultMessage,
-  sendErrorMessage,
-  sendTickersMessage,
-  sendTweetsMessage,
-  sendStockMessage
+  sendCommandsMessage
 };
