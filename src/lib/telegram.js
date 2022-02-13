@@ -9,7 +9,7 @@ const baseUrl = 'https://api.telegram.org/bot';
 const sendMessage = async (chatId, text) => {
 
   const method = 'sendMessage';
-  const url = `${baseUrl}${token}/${method}?chat_id=${chatId}&text=${text}`;
+  const url = `${baseUrl}${token}/${method}?chat_id=${chatId}&text=${encodeURI(text)}`;
 
   await get(url);
 };
