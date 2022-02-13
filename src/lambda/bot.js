@@ -7,42 +7,44 @@ module.exports.handler = async (event) => {
 
   try {
 
+    // debug info
+    console.log('DEBUG EVENT', JSON.stringify(event));
+
     const body = JSON.parse(event.body);
-    const { chat, text } = body?.message || {};
+    const chatId = body?.message?.chat?.id;
+    const text = body?.message?.text.toLowerCase();
 
     // split command from arguments
     const [command, arg] = text.split(' ');
-
-    console.log({ command, arg, text });
 
     // perform action based on what user input
     switch (command) {
 
       case '/commands': {
-        await sendCommandsMessage(chat.id);
+        await sendCommandsMessage(chatId);
         break;
       }
       case '/tokens': {
-        await handleKrakenMessage(chat.id, arg);
+        await handleKrakenMessage(chatId, arg);
         break;
       }
       case '/twitter': {
-        await handleTwitterMessage(chat.id, arg);
+        await handleTwitterMessage(chatId, arg);
         break;
       }
       case '/stocks': {
-        await handleStockMessage(chat.id, arg);
+        await handleStockMessage(chatId, arg);
         break;
       }
       default: {
-        await sendDefaultMessage(chat.id);
+        await sendDefaultMessage(chatId);
       }
     }
 
     return { statusCode: 200 };
 
   } catch (error) {
-    console.log(error);
+    console.log('DEBUG ERROR', JSON.stringify(error));
     return { statusCode: 200 };
   }
 };
