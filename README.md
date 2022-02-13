@@ -31,7 +31,7 @@ curl
   --request POST 
   --url https://api.telegram.org/bot<API_KEY>/setWebhook 
   --header 'content-type: application/json' 
-  --data '{"url": "<function url>"}'
+  --data '{"url": "<ENDPOINT>"}'
 ```
 
 ## Example request structure of message
