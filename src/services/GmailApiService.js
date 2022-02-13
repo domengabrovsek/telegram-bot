@@ -1,4 +1,6 @@
-const { post } = require('./HttpService');
+const { post, get } = require('./HttpService');
+
+const baseUrl = 'https://gmail.googleapis.com/gmail/v1/users';
 
 const getAccessToken = async () => {
   const authUrl = 'https://www.googleapis.com/oauth2/v4/token';
@@ -14,7 +16,26 @@ const getAccessToken = async () => {
   return result.data.access_token;
 };
 
-module.exports = { getAccessToken };
+const getMessage = async (query) => {
+
+  const token = (await getAccessToken()).access_token;
+
+  const options = {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  };
+
+  // TODO: make dynamic
+  const email = 'domen.gabrovsek@gmail.com';
+  const url = `${baseUrl}/${email}/messages?q=${query}`;
+
+  const result = await get(url, options);
+
+  return result.data;
+};
+
+module.exports = { getAccessToken, getMessage };
 // const options = {
 //   headers: {
 //     'Authorization': `Bearer ${token}`
