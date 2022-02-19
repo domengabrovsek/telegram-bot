@@ -1,0 +1,137 @@
+{
+  "env": {
+    "node": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:promise/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "impliedStrict": true,
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-await-in-loop": "error",
+    "no-caller": "error",
+    "no-duplicate-imports": "error",
+    "no-else-return": "error",
+    "no-empty-function": "error",
+    "no-extend-native": "error",
+    "no-extra-bind": "error",
+    "no-extra-label": "error",
+    "no-floating-decimal": "error",
+    "no-implicit-globals": "error",
+    "no-implied-eval": "error",
+    "no-iterator": "error",
+    "no-label-var": "error",
+    "no-labels": "error",
+    "no-lone-blocks": "error",
+    "no-lonely-if": "error",
+    "no-loss-of-precision": "error",
+    "no-loop-func": "error",
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1,
+        "maxBOF": 1,
+        "maxEOF": 1
+      }
+    ],
+    "no-multi-spaces": "error",
+    "no-multi-str": "error",
+    "no-mixed-spaces-and-tabs": "error",
+    "no-new": "error",
+    "no-new-func": "error",
+    "no-new-wrappers": "error",
+    "no-param-reassign": "error",
+    "no-promise-executor-return": "error",
+    "no-proto": "error",
+    "no-prototype-builtins": "error",
+    "no-return-assign": "error",
+    "no-return-await": "error",
+    "no-self-compare": "error",
+    "no-template-curly-in-string": "error",
+    "no-trailing-spaces": "error",
+    "no-unmodified-loop-condition": "error",
+    "no-unneeded-ternary": "error",
+    "no-unreachable-loop": "error",
+    "no-unsafe-finally": "error",
+    "no-unsafe-negation": "error",
+    "no-unsafe-optional-chaining": "error",
+    "no-confusing-arrow": "error",
+    "no-unused-expressions": "error",
+    "no-unused-vars": "error",
+    "arrow-spacing": "error",
+    "no-useless-call": "error",
+    "no-use-before-define": "error",
+    "no-useless-rename": "error",
+    "no-var": "error",
+    "no-void": "error",
+    "no-undef": "error",
+    "no-whitespace-before-property": "error",
+    "accessor-pairs": "error",
+    "array-callback-return": "error",
+    "block-scoped-var": "error",
+    "block-spacing": "error",
+    "valid-typeof": "error",
+    "use-isnan": "error",
+    "comma-spacing": "error",
+    "curly": "error",
+    "eqeqeq": "error",
+    "eol-last": "error",
+    "max-len": [
+      "error",
+      {
+        "code": 150
+      }
+    ],
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "prefer-const": "error",
+    "prefer-promise-reject-errors": "error",
+    "prefer-template": "error",
+    "quotes": [
+      2,
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "require-await": "error",
+    "semi": [
+      "error",
+      "always"
+    ],
+    "semi-spacing": "error",
+    "semi-style": [
+      "error",
+      "last"
+    ],
+    "space-before-blocks": "error",
+    "space-in-parens": "error",
+    "space-infix-ops": "error",
+    "spaced-comment": "error",
+    "template-curly-spacing": [
+      "error",
+      "never"
+    ],
+    "import/no-unresolved": [
+      2,
+      {
+        "commonjs": true,
+        "amd": true
+      }
+    ]
+  },
+  "plugins": [
+    "import",
+    "promise",
+    "node"
+  ]
+}

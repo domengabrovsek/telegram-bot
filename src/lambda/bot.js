@@ -1,27 +1,50 @@
-const axios = require('axios');
+const { sendDefaultMessage, sendCommandsMessage } = require('../lib/telegram');
+const { handleTwitterMessage } = require('../services/TwitterService');
+const { handleKrakenMessage } = require('../services/KrakenService');
+const { handleStockMessage } = require('../services/FinnhubService');
 
-const token = process.env.TELEGRAM_BOT_API_KEY;
+module.exports.handler = async (event) => {
 
-async function sendToUser(chat_id, text) {
-  return await axios.get(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${text}`);
-}
+  try {
 
-module.exports.handler = async event => {
-  const body = JSON.parse(event.body);
-  const { chat, text } = body.message;
+    // debug info
+    console.log('DEBUG EVENT', JSON.stringify(event));
 
-  if (text) {
-    let message = '';
-    try {
-      message = `Input: ${text}`;
-    } catch (error) {
-      message = `Input: ${text}, \nError: ${error.message}`;
+    const body = JSON.parse(event.body);
+    const chatId = body?.message?.chat?.id;
+    const text = body?.message?.text.toLowerCase();
+
+    // split command from arguments
+    const [command, arg] = text.split(' ');
+
+    // perform action based on what user input
+    switch (command) {
+
+      case '/commands': {
+        await sendCommandsMessage(chatId);
+        break;
+      }
+      case '/tokens': {
+        await handleKrakenMessage(chatId, arg);
+        break;
+      }
+      case '/twitter': {
+        await handleTwitterMessage(chatId, arg);
+        break;
+      }
+      case '/stocks': {
+        await handleStockMessage(chatId, arg);
+        break;
+      }
+      default: {
+        await sendDefaultMessage(chatId);
+      }
     }
 
-    await sendToUser(chat.id, message);
-  } else {
-    await sendToUser(chat.id, 'Text message is expected.');
-  }
+    return { statusCode: 200 };
 
-  return { statusCode: 200 };
+  } catch (error) {
+    console.log('DEBUG ERROR', JSON.stringify(error));
+    return { statusCode: 200 };
+  }
 };

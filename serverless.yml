@@ -17,10 +17,13 @@ provider:
   name: aws
   runtime: nodejs14.x
   memorySize: 128
-  region: eu-west-1
+  region: eu-central-1
   environment:
     TELEGRAM_BOT_API_KEY: ${ssm:/dg-telegram-bot-api-key}
-
+    TWITTER_API_KEY: ${ssm:/twitter-api-key}
+    TWITTER_API_KEY_SECRET: ${ssm:/twitter-api-key-secret}
+    TWITTER_BEARER_TOKEN: ${ssm:/twitter-bearer-token}
+    FINNHUB_TOKEN: ${ssm:/finnhub-token}
 functions:
 
   bot:
