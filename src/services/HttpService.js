@@ -5,4 +5,9 @@ const get = async (url, options) => {
   return result.data;
 };
 
-module.exports = { get };
+const post = async (url, data, options) => {
+  const result = await axios.post(url, data, options);
+  return result;
+};
+
+module.exports = { get, post };
