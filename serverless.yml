@@ -12,9 +12,6 @@ configValidationMode: error
 package:
   individually: true
 
-plugins:
-  - serverless-offline
-
 provider:
   # https://www.serverless.com/framework/docs/deprecations/#LAMBDA_HASHING_VERSION_V2
   lambdaHashingVersion: 20201221
@@ -24,11 +21,24 @@ provider:
   memorySize: 128
   region: eu-central-1
   environment:
+    # telegram
     TELEGRAM_BOT_API_KEY: ${ssm:/dg-telegram-bot-api-key}
+
+    # twitter
     TWITTER_API_KEY: ${ssm:/twitter-api-key}
     TWITTER_API_KEY_SECRET: ${ssm:/twitter-api-key-secret}
     TWITTER_BEARER_TOKEN: ${ssm:/twitter-bearer-token}
+
+    # finnhub
     FINNHUB_TOKEN: ${ssm:/finnhub-token}
+
+    # binance
+    BINANCE_API_KEY: ${ssm:/binance_api_key}
+    BINANCE_SECRET_KEY: ${ssm:/binance_secret_key}
+
+    # general
+    MAIN_CURRENCY: EUR
+
 functions:
 
   bot:
