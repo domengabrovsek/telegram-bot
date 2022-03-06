@@ -12,9 +12,6 @@ configValidationMode: error
 package:
   individually: true
 
-plugins:
-  - serverless-offline
-
 provider:
   # https://www.serverless.com/framework/docs/deprecations/#LAMBDA_HASHING_VERSION_V2
   lambdaHashingVersion: 20201221
@@ -41,7 +38,6 @@ provider:
 
     # general
     MAIN_CURRENCY: EUR
-
 
 functions:
 
