@@ -1,5 +1,7 @@
 service: telegram-bot
-
+org: domengabrovsek
+app: telegram-bot
+console: true
 # https://www.serverless.com/framework/docs/deprecations/#NEW_VARIABLES_RESOLVER
 variablesResolutionMode: 20210326
 
@@ -9,6 +11,9 @@ configValidationMode: error
 # create an optimized package for our functions
 package:
   individually: true
+
+plugins:
+  - serverless-offline
 
 provider:
   # https://www.serverless.com/framework/docs/deprecations/#LAMBDA_HASHING_VERSION_V2
