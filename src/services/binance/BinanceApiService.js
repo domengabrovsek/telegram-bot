@@ -37,15 +37,12 @@ exports.getPortfolioValue = async () => {
       const price = prices[Object.keys(prices).find(key => key.includes(token))];
 
       // token balance
-      const balance = balances[token];
+      const balance = Math.round(parseFloat(balances[token]) * 100) / 100;
 
       // value of total tokens in main currency (EUR)
-      const value = parseFloat(price) * parseFloat(balance);
+      const value = Math.round(parseFloat(price) * parseFloat(balance) * 100) / 100;
 
-      // rounded value to 2 decimals
-      const rounded = Math.round(value * 100) / 100;
-
-      return { token, balance, value, rounded };
+      return { token, balance, value };
     });
 
   return portfolio;

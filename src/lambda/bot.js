@@ -1,6 +1,6 @@
 const { sendDefaultMessage, sendCommandsMessage } = require('../lib/telegram');
 const { handleTwitterMessage } = require('../services/TwitterService');
-const { handleKrakenMessage } = require('../services/KrakenService');
+const { handleCryptoMessage } = require('../services/crypto/CryptoService');
 const { handleStockMessage } = require('../services/FinnhubService');
 
 module.exports.handler = async (event) => {
@@ -24,8 +24,8 @@ module.exports.handler = async (event) => {
         await sendCommandsMessage(chatId);
         break;
       }
-      case '/tokens': {
-        await handleKrakenMessage(chatId, arg);
+      case '/crypto': {
+        await handleCryptoMessage(chatId);
         break;
       }
       case '/twitter': {
