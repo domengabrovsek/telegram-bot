@@ -21,8 +21,8 @@ const handleCryptoMessage = async (chatId) => {
     message += `${exchange} \n`;
 
     // for each token on exchange
-    portfolio[exchange].forEach(({ token, balance, value }) => {
-      message += `${balance}${token} is worth ${value}${process.env.MAIN_CURRENCY}\n`;
+    portfolio[exchange].forEach(({ token, balance, value, price }) => {
+      message += `${balance} ${token} is worth ${value} (${price}) ${process.env.MAIN_CURRENCY}\n`;
     });
   });
 

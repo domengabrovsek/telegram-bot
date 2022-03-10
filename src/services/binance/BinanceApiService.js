@@ -42,7 +42,7 @@ exports.getPortfolioValue = async () => {
       // value of total tokens in main currency (EUR)
       const value = Math.round(parseFloat(price) * parseFloat(balance) * 100) / 100;
 
-      return { token, balance, value };
+      return { token, balance, value, price };
     });
 
   return portfolio;
