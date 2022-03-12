@@ -2,6 +2,8 @@ const Binance = require('node-binance-api');
 const options = { APIKEY: process.env.BINANCE_API_KEY, APISECRET: process.env.BINANCE_SECRET_KEY };
 const binance = new Binance().options(options);
 
+const { round } = require('mathjs');
+
 const mainCurrency = process.env.MAIN_CURRENCY || 'EUR';
 
 const getBalances = async () => {
@@ -34,15 +36,15 @@ exports.getPortfolioValue = async () => {
     .map(token => {
 
       // price of token in main currency (EUR)
-      const price = prices[Object.keys(prices).find(key => key.includes(token))];
+      const price = parseFloat(prices[Object.keys(prices).find(key => key.includes(token))]);
 
       // token balance
-      const balance = Math.round(parseFloat(balances[token]) * 100) / 100;
+      const amount = round(balances[token], 4);
 
       // value of total tokens in main currency (EUR)
-      const value = Math.round(parseFloat(price) * parseFloat(balance) * 100) / 100;
+      const value = round(price * amount, 4);
 
-      return { token, balance, value, price };
+      return { token, price, amount, value };
     });
 
   return portfolio;
