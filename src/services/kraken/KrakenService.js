@@ -1,6 +1,6 @@
-const tickers = require('../data/tickers');
+const tickers = require('../../data/tickers');
 const { getTickerInfo } = require('./KrakenApiService');
-const { sendMessage } = require('../lib/telegram');
+const { sendMessage } = require('../../lib/telegram');
 
 const mapTickerInfo = (tickerResult) => {
 

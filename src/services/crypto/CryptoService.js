@@ -1,10 +1,12 @@
 const { sendMessage } = require('../../lib/telegram');
-const { getPortfolioValue } = require('../binance/BinanceApiService');
+const Binance = require('../binance/BinanceApiService');
+const Kraken = require('../kraken/KrakenApiService');
 
 const getTotalPortfolio = async () => {
 
   const portfolio = {
-    binance: await getPortfolioValue()
+    binance: await Binance.getPortfolioValue(),
+    kraken: await Kraken.getPortfolioValue()
   };
 
   return portfolio;
