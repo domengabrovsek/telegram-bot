@@ -1,9 +1,10 @@
 const getCommands = () => {
   const commands = {
     '/commands': 'Display a list of all supported commands.',
-    '/twitter': 'Display recent tweets of provided account.',
-    '/tickers': 'Display info about crypto pairs for provided ticker.',
-    '/stocks': 'Display info about stock for provided symbol'
+    // '/twitter': 'Display recent tweets of provided account.',
+    // '/crypto': 'Display info about crypto pairs for provided ticker.',
+    '/stocks': 'Display info about stock for provided symbol',
+    '/portfolio': 'Display info about my portfolio'
   };
 
   // format commands to format suitable for telegram bot api
