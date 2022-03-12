@@ -21,6 +21,7 @@
   "homepage": "https://github.com/domengabrovsek/telegram-bot#readme",
   "dependencies": {
     "axios": "^0.26.0",
+    "mathjs": "^10.4.0",
     "node-binance-api": "^0.13.1"
   },
   "devDependencies": {

@@ -24,7 +24,7 @@ module.exports.handler = async (event) => {
         await sendCommandsMessage(chatId);
         break;
       }
-      case '/crypto': {
+      case '/portfolio': {
         await handleCryptoMessage(chatId);
         break;
       }
