@@ -1,12 +1,12 @@
 const crypto = require('crypto');
-const qs = require('qs');
 const axios = require('axios');
+const { queryStringify } = require('../../lib/utils');
 
 const { KRAKEN_URL, KRAKEN_API_KEY, KRAKEN_SECRET_KEY } = process.env;
 
 // https://docs.kraken.com/rest/#section/Authentication/Headers-and-Signature
 const getMessageSignature = (path, request) => {
-  const message = qs.stringify(request);
+  const message = queryStringify(request);
   const secret_buffer = Buffer.from(KRAKEN_SECRET_KEY, 'base64');
   const hash = new crypto.createHash('sha256');
   const hmac = new crypto.createHmac('sha512', secret_buffer);
@@ -49,7 +49,7 @@ const callApi = async (endpoint, params = {}) => {
   }
 
   // data to be send
-  const data = qs.stringify(params);
+  const data = queryStringify(params);
 
   // generate signature
   const signature = getMessageSignature(path, params);

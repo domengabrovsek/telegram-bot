@@ -22,8 +22,7 @@
   "dependencies": {
     "axios": "^0.26.0",
     "mathjs": "^10.4.0",
-    "node-binance-api": "^0.13.1",
-    "qs": "^6.10.3"
+    "node-binance-api": "^0.13.1"
   },
   "devDependencies": {
     "eslint": "^8.7.0",
