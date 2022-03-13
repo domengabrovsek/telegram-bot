@@ -1,13 +1,10 @@
 const { round } = require('mathjs');
-const KrakenClient = require('kraken-api');
 
-const kraken = new KrakenClient(process.env.KRAKEN_API_KEY, process.env.KRAKEN_SECRET_KEY);
-
-console.log({ env: process.env });
+const Client = require('./ApiClient');
 
 const getBalances = async () => {
 
-  const response = (await kraken.api('Balance')).result;
+  const response = await Client.getBalances();
 
   // remove zero balances
   const balances = Object.fromEntries(Object.keys(response)
@@ -18,8 +15,8 @@ const getBalances = async () => {
 };
 
 const getAllAssetPairs = async () => {
-  const response = await kraken.api('AssetPairs');
-  return Object.keys(response.result);
+  const response = await Client.getAssetPairs();
+  return Object.keys(response);
 };
 
 const getAssetPairs = async (tickers) => {
@@ -48,15 +45,14 @@ const getAssetPairs = async (tickers) => {
 const getTickerPrice = async (pair) => {
 
   const options = { pair };
-  const response = await kraken.api('Ticker', options);
+  const response = await Client.getTicker(options);
 
-  return response.result;
+  return response;
 };
 
 const getPrices = async (tickers) => {
 
   const assetPairs = await getAssetPairs(tickers);
-
   const response = await Promise.all(assetPairs.map(pair => getTickerPrice(pair)));
 
   const prices = response
@@ -74,48 +70,32 @@ const getPrices = async (tickers) => {
 
 const getPortfolioValue = async () => {
 
-  try {
+  // get balances for all owned tokens
+  const balances = await getBalances();
+  const tokens = Object.keys(balances);
 
-    console.log('Getting balances');
+  // get prices for all owned tokens
+  const prices = await getPrices(tokens);
 
-    const balances = await getBalances();
+  // assemble portfolio
+  const portfolio = tokens
+    .map(token => {
 
-    console.log('Got balances', balances);
+      const key = Object.keys(prices).find(key => key.includes(token));
 
-    const tokens = Object.keys(balances);
+      // price of token in main currency
+      const price = parseFloat(prices[key]);
 
-    console.log('Getting prices');
+      const amount = round(balances[token], 4);
 
-    const prices = await getPrices(tokens);
+      const value = round(price * amount, 4);
 
-    console.log('Got prices', prices);
+      return { token, price, amount, value };
+    })
+    // filter out all tokens with 0 value in fiat currency
+    .filter(token => token.value > 0);
 
-
-    console.log('Getting portfolio');
-    const portfolio = tokens
-      .map(token => {
-
-        const key = Object.keys(prices).find(key => key.includes(token));
-
-        // price of token in main currency
-        const price = parseFloat(prices[key]);
-
-        const amount = round(balances[token], 4);
-
-        const value = round(price * amount, 4);
-
-        return { token, price, amount, value };
-      })
-      // filter out all tokens with 0 value in fiat currency
-      .filter(token => token.value > 0);
-
-    console.log('Got portfolio', portfolio);
-
-    return portfolio;
-  } catch (error) {
-    console.error(JSON.stringify(error));
-    throw error;
-  }
+  return portfolio;
 };
 
 module.exports = { getPortfolioValue };
