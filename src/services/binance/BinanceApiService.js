@@ -26,7 +26,7 @@ const getPrices = async (tokens = []) => {
   return prices;
 };
 
-exports.getPortfolioValue = async () => {
+const getPortfolio = async () => {
 
   const balances = await getBalances();
   const tokens = Object.keys(balances);
@@ -47,5 +47,9 @@ exports.getPortfolioValue = async () => {
       return { token, price, amount, value };
     });
 
-  return portfolio;
+    const totalValue = round(portfolio.reduce((sum, curr) => sum + curr.value, 0), 4);
+
+  return { exchange: 'Binance', portfolio, totalValue };
 };
+
+module.exports = { getPortfolio };
