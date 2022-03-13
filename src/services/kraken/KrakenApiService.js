@@ -30,7 +30,8 @@ const getAssetPairs = async (tickers) => {
     .filter(pair => {
       const [, fiat] = pair.split('EUR');
       return Boolean(!fiat);
-    });
+    })
+    .filter(pair => !pair.includes('ZEUR'));
 
   const matchedAssetPairs = tickers
     .map(ticker => assetPairs.find(pair => {
@@ -68,7 +69,7 @@ const getPrices = async (tickers) => {
   return Object.fromEntries(prices);
 };
 
-const getPortfolioValue = async () => {
+const getPortfolio = async () => {
 
   // get balances for all owned tokens
   const balances = await getBalances();
@@ -95,7 +96,9 @@ const getPortfolioValue = async () => {
     // filter out all tokens with 0 value in fiat currency
     .filter(token => token.value > 0);
 
-  return portfolio;
+  const totalValue = round(portfolio.reduce((sum, curr) => sum + curr.value, 0), 4);
+
+  return { exchange: 'Kraken', portfolio, totalValue };
 };
 
-module.exports = { getPortfolioValue };
+module.exports = { getPortfolio };

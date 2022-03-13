@@ -2,29 +2,23 @@ const { sendMessage } = require('../../lib/telegram');
 const Binance = require('../binance/BinanceApiService');
 const Kraken = require('../kraken/KrakenApiService');
 
-const getTotalPortfolio = async () => {
-
-  const binance = await Binance.getPortfolioValue();
-  const kraken = await Kraken.getPortfolioValue();
-
-  const portfolio = { binance, kraken };
-
-  return portfolio;
+const getTotalPortfolio = () => {
+  return Promise.all([Binance.getPortfolio(), Kraken.getPortfolio()]);
 };
 
 const handleCryptoMessage = async (chatId) => {
 
-  const portfolio = await getTotalPortfolio();
+  const portfolios = await getTotalPortfolio();
   const currency = process.env.MAIN_CURRENCY;
 
   let message = 'Here is the info about your crypto portfolio:\n\n';
 
   // for each exchange
-  Object.keys(portfolio).forEach(exchange => {
-    message += `${exchange}\n\n`;
+  portfolios.forEach(({ exchange, portfolio, totalValue }) => {
+    message += `\n${exchange}\n\n`;
 
     // for each token on exchange
-    portfolio[exchange].forEach(({ token, amount, value, price }) => {
+    portfolio.forEach(({ token, amount, value, price }) => {
       message += `Token: ${token}\n`;
       message += `Current price: ${price}\n`;
       message += `Amount: ${amount}\n`;
@@ -32,13 +26,11 @@ const handleCryptoMessage = async (chatId) => {
       message += '\n';
     });
 
-    const total = portfolio[exchange].reduce((sum, curr) => sum + curr.value, 0);
-    message += `Total: ${total}${currency}\n`;
-
+    message += `Total: ${totalValue}${currency}\n`;
+    message += '\n****************************************\n';
   });
 
   await sendMessage(chatId, message);
-
 };
 
 module.exports = { getTotalPortfolio, handleCryptoMessage };
