@@ -4,20 +4,17 @@ Telegram bot
 
 ## Description
 
-Playing around with telegram bot and nodejs and integrating different services into telegram bot.
+Telegram bot running as serverless AWS Lambda integrating various services.
 
 ## Commands
 
 ```js
 
-// get a list of all currently supported commands
+// sync list of supported commands
 /commands
 
-// get recent tweets for specified username
-/twitter [username]
-
-// get current crypto token prices for specified ticker
-/tokens [ticker]
+// retrieves portfolios from binance and kraken crypto exchanges
+/portfolio
 
 // get current stock prices for specified symbol
 /stocks [symbol]
