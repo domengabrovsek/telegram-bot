@@ -4,10 +4,10 @@ const Kraken = require('../kraken/KrakenApiService');
 
 const getTotalPortfolio = async () => {
 
-  const portfolio = {
-    binance: await Binance.getPortfolioValue(),
-    kraken: await Kraken.getPortfolioValue()
-  };
+  const binance = await Binance.getPortfolioValue();
+  const kraken = await Kraken.getPortfolioValue();
+
+  const portfolio = { binance, kraken };
 
   return portfolio;
 };
