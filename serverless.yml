@@ -39,6 +39,7 @@ provider:
     # kraken
     KRAKEN_API_KEY: ${ssm:/kraken_api_key}
     KRAKEN_SECRET_KEY: ${ssm:/kraken_secret_key}
+    KRAKEN_URL: 'https://api.kraken.com'
 
     # general
     MAIN_CURRENCY: EUR
