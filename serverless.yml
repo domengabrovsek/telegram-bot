@@ -1,7 +1,4 @@
 service: telegram-bot
-org: domengabrovsek
-app: telegram-bot
-console: false
 
 # throw error before trying to deploy if something is wrong in config
 configValidationMode: error
