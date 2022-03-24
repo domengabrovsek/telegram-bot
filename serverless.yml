@@ -1,9 +1,7 @@
 service: telegram-bot
 org: domengabrovsek
 app: telegram-bot
-console: true
-# https://www.serverless.com/framework/docs/deprecations/#NEW_VARIABLES_RESOLVER
-variablesResolutionMode: 20210326
+console: false
 
 # throw error before trying to deploy if something is wrong in config
 configValidationMode: error
@@ -12,10 +10,18 @@ configValidationMode: error
 package:
   individually: true
 
-provider:
-  # https://www.serverless.com/framework/docs/deprecations/#LAMBDA_HASHING_VERSION_V2
-  lambdaHashingVersion: 20201221
+custom:
+  webpack:
+    webpackConfig: 'webpack.config.js' # Name of webpack configuration file
+    includeModules: false # Node modules configuration for packaging
+    packager: 'npm' # Packager that will be used to package your external modules
+    excludeFiles: src/**/*.test.js # Provide a glob for files to ignore
 
+plugins:
+  - serverless-webpack # https://github.com/serverless-heaven/serverless-webpack
+
+provider:
+  
   name: aws
   runtime: nodejs14.x
   memorySize: 128
