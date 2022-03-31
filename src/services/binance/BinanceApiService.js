@@ -1,11 +1,11 @@
-const client = require('./BinanceApiClient');
+const { getBalances, getPrices } = require('./BinanceApiClient');
 const { round } = require('mathjs');
 
 const getPortfolio = async () => {
 
-  const balances = await client.getBalances();
+  const balances = await getBalances();
   const tokens = Object.keys(balances);
-  const prices = await client.getPrices(tokens);
+  const prices = await getPrices(tokens);
 
   const portfolio = tokens
     .map(token => {
