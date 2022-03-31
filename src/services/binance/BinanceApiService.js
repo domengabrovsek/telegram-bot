@@ -1,30 +1,5 @@
-const Binance = require('node-binance-api');
-const options = { APIKEY: process.env.BINANCE_API_KEY, APISECRET: process.env.BINANCE_SECRET_KEY };
-const binance = new Binance().options(options);
-
+const { getBalances, getPrices } = require('./BinanceApiClient');
 const { round } = require('mathjs');
-
-const mainCurrency = process.env.MAIN_CURRENCY || 'EUR';
-
-const getBalances = async () => {
-  const result = await binance.balance();
-
-  return Object.fromEntries(
-    Object.keys(result)
-      .filter(key => parseFloat(result[key].available) > 0)
-      .map(key => [key, result[key].available]));
-};
-
-const getPrices = async (tokens = []) => {
-  const result = await binance.prices();
-
-  const prices = Object.fromEntries(
-    Object.keys(result)
-      .filter(key => tokens.some(token => key.includes(token) && key.includes(mainCurrency)))
-      .map(key => [key, result[key]]));
-
-  return prices;
-};
 
 const getPortfolio = async () => {
 
@@ -47,7 +22,7 @@ const getPortfolio = async () => {
       return { token, price, amount, value };
     });
 
-    const totalValue = round(portfolio.reduce((sum, curr) => sum + curr.value, 0), 4);
+  const totalValue = round(portfolio.reduce((sum, curr) => sum + curr.value, 0), 4);
 
   return { exchange: 'Binance', portfolio, totalValue };
 };

@@ -38,6 +38,7 @@ provider:
     # binance
     BINANCE_API_KEY: ${ssm:/binance_api_key}
     BINANCE_SECRET_KEY: ${ssm:/binance_secret_key}
+    BINANCE_URL: https://api.binance.com/api/v3
 
     # kraken
     KRAKEN_API_KEY: ${ssm:/kraken_api_key}
@@ -45,7 +46,7 @@ provider:
     KRAKEN_URL: 'https://api.kraken.com'
 
     # general
-    MAIN_CURRENCY: EUR
+    CURRENCY: EUR
 
 functions:
 
