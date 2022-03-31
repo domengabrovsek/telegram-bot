@@ -9,7 +9,7 @@ const getTotalPortfolio = () => {
 const handleCryptoMessage = async (chatId) => {
 
   const portfolios = await getTotalPortfolio();
-  const currency = process.env.MAIN_CURRENCY;
+  const currency = process.env.CURRENCY;
 
   let message = 'Here is the info about your crypto portfolio:\n\n';
 
