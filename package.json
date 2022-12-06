@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/domengabrovsek/telegram-bot#readme",
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.2.1",
     "mathjs": "^11.0.1"
   },
   "devDependencies": {
