@@ -1,19 +1,20 @@
-import fastify from 'fastify';
+import fastify from "fastify";
+import cors from "@fastify/cors";
+import health from "fastify-healthcheck";
+import helmet from "@fastify/helmet";
 
-const app = fastify({
+const server = fastify({
   logger: true
 });
 
-app.get('/', async (request, reply) => {
-  reply.send({ message: 'Hello, World!' });
+server.register(cors);
+server.register(health);
+server.register(helmet);
+
+server.get("/", function (request, reply) {
+  reply.code(200).send({
+    hello: 'world'
+  });
 });
 
-const start = async () => {
-  try {
-    await app.listen({ port: 3000 })
-  } catch (err) {
-    app.log.error(err)
-    process.exit(1)
-  }
-}
-start()
+server.listen(3000, '0.0.0.0');

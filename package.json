@@ -7,23 +7,31 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/index",
-    "lint": "eslint . --ext .ts --config package.json"
+    "build:app": "npx tsc",
+    "build:docker-image": "docker build -t telegram-bot-backend .",
+    "deploy": "npm run build && npm run build:docker-image && npm run push && terraform apply",
+    "lint": "eslint ./src --ext .ts --config package.json",
+    "push": "docker push gcr.io/domen-telegram-bot/telegram-bot-backend",
+    "start": "node dist/index"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/domengabrovsek/telegram-bot.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["telegram", "telegram-bot", "serverless", "gcp", "cloudrun", "cloud-run"],
+  "author": "Domen Gabrovsek",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/domengabrovsek/telegram-bot/issues"
   },
   "homepage": "https://github.com/domengabrovsek/telegram-bot#readme",
   "dependencies": {
-    "fastify": "^4.12.0"
+    "@fastify/cors": "^8.2.0",
+    "@fastify/helmet": "^10.1.0",
+    "@fastify/swagger": "^8.3.1",
+    "fastify": "^4.12.0",
+    "fastify-healthcheck": "^4.4.0",
+    "typescript": "^4.9.5"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
