@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "Telegram bot",
   "main": "index.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
-    "deploy": "serverless deploy --aws-profile admin-personal --verbose",
-    "lint": "eslint . --max-warnings 0 --fix",
-    "prepare": "husky install"
+    "lint": "eslint . --config package.json"
   },
   "repository": {
     "type": "git",
@@ -20,17 +21,37 @@
   },
   "homepage": "https://github.com/domengabrovsek/telegram-bot#readme",
   "dependencies": {
-    "axios": "^0.27.2",
-    "mathjs": "^10.4.0"
+    "fastify": "^4.12.0"
   },
   "devDependencies": {
+    "@types/node": "^18.11.18",
+    "@typescript-eslint/eslint-plugin": "^5.50.0",
+    "@typescript-eslint/parser": "^5.50.0",
     "dotenv": "^16.0.0",
-    "eslint": "^8.7.0",
-    "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.0.0",
+    "eslint": "^7.32.0",
     "husky": "^8.0.1",
-    "serverless": "^3.1.0",
-    "serverless-webpack": "^5.6.1"
+    "prettier": "^2.2.1"
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "es6": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "rules": {
+      "@typescript-eslint/no-unused-vars": "error",
+      "no-console": "off"
+    }
   }
 }
