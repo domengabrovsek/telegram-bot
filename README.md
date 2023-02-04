@@ -4,31 +4,12 @@ Telegram bot
 
 ## Description
 
-Telegram bot running as serverless AWS Lambda integrating various services.
-
-## Commands
-
-```js
-
-// sync list of supported commands
-/commands
-
-// retrieves portfolios from binance and kraken crypto exchanges
-/portfolio
-
-// get current stock prices for specified symbol
-/stocks [symbol]
-
-```
+Telegram bot deployed in CloudRun.
 
 ## Setup a webhook for the bot
 
 ```js
-curl 
-  --request POST 
-  --url https://api.telegram.org/bot<API_KEY>/setWebhook 
-  --header 'content-type: application/json' 
-  --data '{"url": "<ENDPOINT>"}'
+  https://api.telegram.org/bot<api-key>/setWebhook?url=<endpoint>
 ```
 
 ## Example request structure of message

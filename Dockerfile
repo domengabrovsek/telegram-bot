@@ -14,10 +14,13 @@ RUN npm install
 COPY . .
 
 # Build the TypeScript code
-RUN npm run build
+RUN npm run build:app
 
 # Remove the devDependencies
 RUN npm prune --production
+
+# remove all not needed files
+RUN rm -rf Dockerfile src tsconfig.json package.json package-lock.json
 
 # Expose port 3000 to receive incoming requests
 EXPOSE 3000

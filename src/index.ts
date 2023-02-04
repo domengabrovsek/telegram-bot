@@ -13,8 +13,17 @@ server.register(helmet);
 
 server.get("/", function (request, reply) {
   reply.code(200).send({
-    hello: 'world'
+    hello: 'world-latest',
+    for: "real"
   });
+});
+
+server.post("/bot", function (request, reply) {
+  reply.code(200).send(request.body);
+});
+
+server.get("/bot", function (request, reply) {
+  reply.code(200).send(request);
 });
 
 server.listen(3000, '0.0.0.0');
