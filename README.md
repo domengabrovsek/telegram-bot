@@ -1,15 +1,19 @@
 # telegram-bot
 
-Telegram bot
-
 ## Description
 
 Telegram bot deployed in CloudRun.
 
+## Run it locally
+
+```docker
+~ docker-compose up
+```
+
 ## Setup a webhook for the bot
 
 ```js
-  https://api.telegram.org/bot<api-key>/setWebhook?url=<endpoint>
+GET https://api.telegram.org/bot<api-key>/setWebhook?url=<endpoint>
 ```
 
 ## Example request structure of message
