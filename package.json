@@ -7,7 +7,9 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "lint": "eslint . --config package.json"
+    "build": "tsc",
+    "start": "node dist/index",
+    "lint": "eslint . --ext .ts --config package.json"
   },
   "repository": {
     "type": "git",
@@ -28,7 +30,7 @@
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
     "dotenv": "^16.0.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.33.0",
     "husky": "^8.0.1",
     "prettier": "^2.2.1"
   },
