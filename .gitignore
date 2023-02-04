@@ -1,4 +1,15 @@
+# npm dependencies
 node_modules
+
+# local env vars
 .env
+*credentials*
+
+# Mac stuff
 .DS_STORE
+
+# build files
 dist
+
+# terraform files
+*terraform*
