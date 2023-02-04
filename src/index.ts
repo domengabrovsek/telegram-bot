@@ -12,18 +12,21 @@ server.register(health);
 server.register(helmet);
 
 server.get("/", function (request, reply) {
-  reply.code(200).send({
-    hello: 'world-latest',
-    for: "real"
-  });
+  reply.code(200).send({ status: 'ok' });
 });
 
-server.post("/bot", function (request, reply) {
-  reply.code(200).send(request.body);
-});
+server.post("/bot", async (request, reply) => {
 
-server.get("/bot", function (request, reply) {
-  reply.code(200).send(request);
+  console.log(request.body);
+
+  const body = request.body as any;
+  const chatId = body?.message?.chat?.id;
+  const text = body?.message?.text.toLowerCase();
+  const url = `${process.env.BASE_URL}${process.env.API_KEY}/sendMessage?chat_id=${chatId}&text=${encodeURI(text)}`;
+
+  await fetch(url);
+
+  reply.code(200).send({});
 });
 
 server.listen(3000, '0.0.0.0');

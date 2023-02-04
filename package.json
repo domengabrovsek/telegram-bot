@@ -7,7 +7,7 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "build": "npm run build:app && npm run build:docker-image && npm run build:docker-tag",
+    "build": " npm run build:docker-image && npm run build:docker-tag",
     "build:app": "rm -rf dist && npx tsc",
     "build:docker-image": "docker build -t telegram-bot-backend .",
     "build:docker-tag": "docker tag telegram-bot-backend gcr.io/domen-telegram-bot/telegram-bot-backend",
