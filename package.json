@@ -7,20 +7,31 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "build": " npm run build:docker-image && npm run build:docker-tag",
-    "build:app": "rm -rf dist && npx tsc",
-    "build:docker-image": "docker build -t telegram-bot-backend .",
-    "build:docker-tag": "docker tag telegram-bot-backend gcr.io/domen-telegram-bot/telegram-bot-backend",
-    "deploy": "npm run build:app && npm run build:docker-image && npm run push && terraform apply",
+    "build": "tsc",
+    "docker:build": "docker build -t telegram-bot-backend .",
+    "docker:tag": "docker tag telegram-bot-backend gcr.io/domen-telegram-bot/telegram-bot-backend",
+    "docker:push": "docker push gcr.io/domen-telegram-bot/telegram-bot-backend",
+    "deploy": "npm run docker:build && npm run docker:tag && npm run docker:push",
     "lint": "eslint ./src --ext .ts --config package.json",
-    "push": "docker push gcr.io/domen-telegram-bot/telegram-bot-backend",
-    "start": "node dist/index"
+    "start": "npm run build && node --no-warnings dist/index",
+    "watch": "nodemon dist/index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/domengabrovsek/telegram-bot.git"
   },
-  "keywords": ["telegram", "telegram-bot", "serverless", "gcp", "cloudrun", "cloud-run"],
+  "keywords": [
+    "telegram",
+    "telegram-bot",
+    "serverless",
+    "gcp",
+    "cloudrun",
+    "cloud-run",
+    "node",
+    "nodejs",
+    "typescript",
+    "javascript"
+  ],
   "author": "Domen Gabrovsek",
   "license": "MIT",
   "bugs": {
@@ -31,6 +42,7 @@
     "@fastify/cors": "^8.2.0",
     "@fastify/helmet": "^10.1.0",
     "@fastify/swagger": "^8.3.1",
+    "dotenv": "^16.0.3",
     "fastify": "^4.12.0",
     "fastify-healthcheck": "^4.4.0",
     "typescript": "^4.9.5"
@@ -39,9 +51,9 @@
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
-    "dotenv": "^16.0.0",
     "eslint": "^8.33.0",
     "husky": "^8.0.1",
+    "nodemon": "^2.0.20",
     "prettier": "^2.2.1"
   },
   "eslintConfig": {

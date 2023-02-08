@@ -3,13 +3,20 @@ import cors from "@fastify/cors";
 import health from "fastify-healthcheck";
 import helmet from "@fastify/helmet";
 
-const server = fastify({
-  logger: true
-});
+import { authMiddleware } from "./middleware/authMiddleware";
+import { sendMessage } from "./services/message-service";
+
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+const server = fastify({ logger: true });
 
 server.register(cors);
 server.register(health);
 server.register(helmet);
+
+// register auth middleware to run before every request
+server.addHook('preHandler', authMiddleware);
 
 server.get("/", function (request, reply) {
   reply.code(200).send({ status: 'ok' });
@@ -20,13 +27,11 @@ server.post("/bot", async (request, reply) => {
   console.log(request.body);
 
   const body = request.body as any;
-  const chatId = body?.message?.chat?.id;
-  const text = body?.message?.text.toLowerCase();
-  const url = `${process.env.BASE_URL}${process.env.API_KEY}/sendMessage?chat_id=${chatId}&text=${encodeURI(text)}`;
+  const text = body?.message?.text;
 
-  await fetch(url);
+  sendMessage(text);
 
   reply.code(200).send({});
 });
 
-server.listen(3000, '0.0.0.0');
+server.listen({ port: 3000, host: '0.0.0.0' });

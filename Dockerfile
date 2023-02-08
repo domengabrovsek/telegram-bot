@@ -26,4 +26,4 @@ RUN rm -rf Dockerfile src tsconfig.json package.json package-lock.json
 EXPOSE 3000
 
 # Set the command to start the server
-CMD [ "node", "dist/index.js" ]
+CMD [ "node --no-warnings", "dist/index.js" ]
