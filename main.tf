@@ -16,7 +16,7 @@ module "cloud_run" {
   service_name = "telegram-bot-backend"
   project_id   = "domen-telegram-bot"
   location     = "europe-central2"
-  image        = "gcr.io/domen-telegram-bot/telegram-bot-backend"
+  image        = "gcr.io/domen-telegram-bot/telegram-bot-backend:latest"
   members      = ["allUsers"]
   ports        = { "name" : "http1", "port" : "3000" }
 }
