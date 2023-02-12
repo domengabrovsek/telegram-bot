@@ -36,7 +36,7 @@ type TelegramMessage = {
 
 type TelegramCallbackDataType = 'portfolio';
 
-type TelegramInlineKeyboardButton = {
+export type TelegramInlineKeyboardButton = {
   text: string,
   callback_data: TelegramCallbackDataType
 }
