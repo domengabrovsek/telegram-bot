@@ -11,7 +11,8 @@
     "docker:build": "docker build -t telegram-bot-backend .",
     "docker:tag": "docker tag telegram-bot-backend gcr.io/domen-telegram-bot/telegram-bot-backend",
     "docker:push": "docker push gcr.io/domen-telegram-bot/telegram-bot-backend",
-    "deploy": "npm run docker:build && npm run docker:tag && npm run docker:push",
+    "deploy": "gcloud run deploy telegram-bot-backend --image gcr.io/domen-telegram-bot/telegram-bot-backend:latest --platform managed --region europe-central2",
+    "redeploy": "npm run docker:build && npm run docker:tag && npm run docker:push && npm run deploy",
     "lint": "eslint ./src --ext .ts --config package.json",
     "start": "npm run build && node --no-warnings dist/index",
     "watch": "nodemon dist/index.js"
