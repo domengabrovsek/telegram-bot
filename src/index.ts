@@ -7,6 +7,7 @@ import { authMiddleware } from "./middleware/authMiddleware";
 import { sendMessage } from "./services/telegram-service";
 
 import * as dotenv from 'dotenv';
+import { TelegramInput } from "./types/telegram";
 dotenv.config();
 
 const server = fastify({ logger: true });
@@ -24,11 +25,11 @@ server.get("/", function (request, reply) {
 
 server.post("/bot", async (request, reply) => {
 
-  console.log(request.body);
+  const input = request.body as TelegramInput;
 
-  const body = request.body as any;
-  const text = body?.message?.text;
+  console.log(JSON.stringify(request.body));
 
+  const { text } = input.message;
   sendMessage(text);
 
   reply.code(200).send({});
