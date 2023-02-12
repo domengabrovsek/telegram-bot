@@ -4,7 +4,7 @@ import health from "fastify-healthcheck";
 import helmet from "@fastify/helmet";
 
 import { authMiddleware } from "./middleware/authMiddleware";
-import { sendMessage } from "./services/message-service";
+import { sendMessage } from "./services/telegram-service";
 
 import * as dotenv from 'dotenv';
 dotenv.config();

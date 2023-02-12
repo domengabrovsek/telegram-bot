@@ -1,4 +1,4 @@
-import { sendMessage } from "../services/message-service";
+import { sendMessage } from "../services/telegram-service";
 
 export const authMiddleware = async (request: any, reply: any, next: any) => {
 
