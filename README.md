@@ -4,7 +4,7 @@
 
 Telegram bot deployed in CloudRun.
 
-## Run it locally
+## Get started
 
 ```js
 
@@ -16,6 +16,7 @@ Telegram bot deployed in CloudRun.
 
 // as docker container 
 ~ docker-compose up
+
 ```
 
 ## Setup a webhook for the bot
