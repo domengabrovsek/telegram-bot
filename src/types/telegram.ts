@@ -1,6 +1,7 @@
 type TelegramChatType = 'private';
 type TelegramEntityType = 'bot_command';
 type TelegramLanguageCode = 'en';
+type TelegramInputType = 'message' | 'callbackQuery';
 
 type TelegramEntity = {
   offset: number,
@@ -25,16 +26,15 @@ type TelegramChat = {
   type: TelegramChatType
 };
 
-type TelegramMessage = {
+export type TelegramMessage = {
   message_id: number,
   from: TelegramFrom,
   chat: TelegramChat,
   date: number,
   text: string,
-  entities: TelegramEntity[]
+  reply_markup?: ReplyMarkup,
+  entities?: TelegramEntity[]
 };
-
-type TelegramCallbackDataType = 'portfolio';
 
 export type TelegramInlineKeyboardButton = {
   text: string,
@@ -60,11 +60,27 @@ export type TelegramInlineKeyboard = {
   inline_keyboard: TelegramInlineKeyboardRow[]
 };
 
+export type TelegramCallbackQuery = {
+  id: string,
+  from: TelegramFrom,
+  message: TelegramMessage,
+  chat_instance: 'string',
+  data: TelegramCallbackDataType
+}
+
 export type TelegramInput = {
   update_id: number,
-  message: TelegramMessage
-};
+  type: TelegramInputType,
+  message?: TelegramMessage,
+  callback_query?: TelegramCallbackQuery
+}
 
 export enum TelegramMethod {
   SendMessage = 'sendMessage'
+}
+
+export type TelegramCallbackDataType = 'portfolio';
+
+export enum TelegramCallbackDataTypeEnum {
+  Portfolio = 'portfolio'
 }
