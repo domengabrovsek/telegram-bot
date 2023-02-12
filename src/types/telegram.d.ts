@@ -1,8 +1,3 @@
-export type TelegramCommand = {
-  command: string,
-  description: string
-}
-
 type TelegramChatType = 'private';
 type TelegramEntityType = 'bot_command';
 type TelegramLanguageCode = 'en';
@@ -39,7 +34,37 @@ type TelegramMessage = {
   entities: TelegramEntity[]
 };
 
+type TelegramCallbackDataType = 'portfolio';
+
+type TelegramInlineKeyboardButton = {
+  text: string,
+  callback_data: TelegramCallbackDataType
+}
+
+type TelegramInlineKeyboardRow = TelegramInlineKeyboardButton[];
+
+type ReplyMarkup = TelegramInlineKeyboard | undefined;
+
+export type SendMessageRequest = {
+  chat_id: string,
+  text: string,
+  reply_markup?: ReplyMarkup
+};
+
+export type TelegramCommand = {
+  command: string,
+  description: string
+}
+
+export type TelegramInlineKeyboard = {
+  inline_keyboard: TelegramInlineKeyboardRow[]
+};
+
 export type TelegramInput = {
   update_id: number,
   message: TelegramMessage
 };
+
+export enum TelegramMethod {
+  SendMessage = 'sendMessage'
+}
