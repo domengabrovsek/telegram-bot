@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Build the TypeScript code
-RUN npm run build:app
+RUN npm run build
 
 # Remove the devDependencies
 RUN npm prune --production
@@ -26,4 +26,4 @@ RUN rm -rf Dockerfile src tsconfig.json package.json package-lock.json
 EXPOSE 3000
 
 # Set the command to start the server
-CMD [ "node --no-warnings", "dist/index.js" ]
+CMD [ "node", "dist/index.js" ]

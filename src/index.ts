@@ -4,7 +4,10 @@ import health from "fastify-healthcheck";
 import helmet from "@fastify/helmet";
 
 import { authMiddleware } from "./middleware/authMiddleware";
-import { sendMessage } from "./services/message-service";
+import { setRequestType } from "./middleware/setRequestType";
+
+import { TelegramCallbackQuery, TelegramInput, TelegramMessage } from "./types/telegram";
+import { handleCallbackQuery, handleMessage } from "./lib/telegram-utils";
 
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -15,6 +18,9 @@ server.register(cors);
 server.register(health);
 server.register(helmet);
 
+// set request type before running main handler logic
+server.addHook('preHandler', setRequestType);
+
 // register auth middleware to run before every request
 server.addHook('preHandler', authMiddleware);
 
@@ -24,12 +30,21 @@ server.get("/", function (request, reply) {
 
 server.post("/bot", async (request, reply) => {
 
-  console.log(request.body);
+  const input = request.body as TelegramInput;
 
-  const body = request.body as any;
-  const text = body?.message?.text;
-
-  sendMessage(text);
+  switch (input.type) {
+    case 'message': {
+      handleMessage(input.message as TelegramMessage);
+      break;
+    }
+    case 'callbackQuery': {
+      handleCallbackQuery(input.callback_query as TelegramCallbackQuery);
+      break;
+    }
+    default: {
+      throw new Error('Unsupported input type!');
+    }
+  }
 
   reply.code(200).send({});
 });
