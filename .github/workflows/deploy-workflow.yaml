@@ -1,0 +1,35 @@
+name: Deploy new bot version to Cloud run
+
+on:
+  push
+
+env:
+  DOCKER_REGISTRY: gcr.io/domen-telegram-bot
+  DOCKER_IMAGE: telegram-bot-backend
+  DOCKER_TAG: latest
+
+jobs:
+  build-and-push-docker-image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build Docker Image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        tags: ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_TAG}
+        
+    - name: Login to GCR
+      uses: google/docker-credential-gcr@v1
+      with:
+        _json_key: ${{ secrets.GCR_JSON_KEY }}
+        stage: build-push
+      
+    - name: Push Docker Image to GCR
+      uses: docker/push-action@v1
+      with:
+        tags: ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_TAG}
