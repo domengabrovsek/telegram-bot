@@ -1,12 +1,12 @@
 import { createTelegramInlineKeyboard, getChatId, getUrl } from "../lib/telegram-utils";
-import { SendMessageRequest, TelegramCommand, TelegramInlineKeyboardButton, TelegramMethod } from "../types/telegram";
+import { SendMessageRequest, TelegramCallbackDataTypeEnum, TelegramCommand, TelegramInlineKeyboardButton, TelegramMethod } from "../types/telegram";
 
 export const sendMessageWithInlineKeyboard = async () => {
 
   const url = getUrl(TelegramMethod.SendMessage);
 
   const buttons: TelegramInlineKeyboardButton[] = [
-    { text: 'Get portfolio', callback_data: 'portfolio' },
+    { text: 'Get portfolio', callback_data: TelegramCallbackDataTypeEnum.Portfolio },
   ];
 
   const data: SendMessageRequest = {
@@ -41,6 +41,11 @@ export const sendMessage = async (text: string) => {
 
   await fetch(url, request);
 };
+
+export const sendDefaultMessage = async (text: string) => {
+  const message = `I'm just repeating whatever you said: "${text}"`;
+  await sendMessage(message);
+}
 
 export const setCommands = async (commands: TelegramCommand[]) => {
 
