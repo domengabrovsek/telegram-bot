@@ -19,7 +19,7 @@ Telegram bot deployed in CloudRun.
 
 ```
 
-## Setup a webhook for the bot
+## Setup a webhook for the bot (only once at start)
 
 ```js
 GET https://api.telegram.org/bot<api-key>/setWebhook?url=<endpoint>
